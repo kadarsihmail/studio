@@ -31,7 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { attendanceRecords, courses, lecturers } from "@/lib/data";
+import { attendanceRecords, courses, lecturers, type Lecturer } from "@/lib/data";
 import { format, startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
 
 type LecturerWeeklyStats = {
@@ -42,6 +42,7 @@ type LecturerWeeklyStats = {
   late: number;
   total: number;
   finalRecap: number;
+  status: Lecturer['status'];
 };
 
 export default function Dashboard() {
@@ -59,18 +60,25 @@ export default function Dashboard() {
 
   const lecturerStats: LecturerWeeklyStats[] = lecturers.map(lecturer => {
     const lecturerRecords = weeklyAttendance.filter(rec => rec.lecturer.id === lecturer.id);
-    const present = lecturerRecords.filter(r => r.status === 'Present' || r.status === 'Late').length; // Count present and late as attendance for the calculation
-    const late = lecturerRecords.filter(r => r.status === 'Late').length;
-    const finalRecap = (present * 2) - 16;
+    const presentCount = lecturerRecords.filter(r => r.status === 'Present' || r.status === 'Late').length;
+    const lateCount = lecturerRecords.filter(r => r.status === 'Late').length;
+    
+    let finalRecap: number;
+    if (lecturer.status === 'Tetap' || lecturer.status === 'Non Daily') {
+      finalRecap = (presentCount * 2) - 16;
+    } else { // Dosen LB
+      finalRecap = presentCount;
+    }
 
     return {
       id: lecturer.id,
       name: lecturer.name,
       avatarUrl: lecturer.avatarUrl,
-      present: lecturerRecords.filter(r => r.status === 'Present').length,
-      late: late,
+      present: presentCount - lateCount,
+      late: lateCount,
       total: lecturerRecords.length,
       finalRecap: finalRecap,
+      status: lecturer.status,
     };
   });
 
@@ -238,7 +246,10 @@ export default function Dashboard() {
                                     </Avatar>
                                     <div>
                                         <CardTitle className="text-lg">{lecturer.name}</CardTitle>
-                                        <CardDescription>{lecturer.total} sessions this week</CardDescription>
+                                        <div className="flex items-center gap-2">
+                                            <CardDescription>{lecturer.total} sessions this week</CardDescription>
+                                            <Badge variant="secondary">{lecturer.status}</Badge>
+                                        </div>
                                     </div>
                                 </CardHeader>
                                 <CardContent className="flex-grow grid grid-cols-2 gap-4 pt-2">

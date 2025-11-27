@@ -9,13 +9,14 @@ export type Lecturer = {
   faculty: string;
   avatarUrl: string;
   courses: Course[];
+  status: 'Tetap' | 'Non Daily' | 'LB';
 };
 
 export type Course = {
   id: string;
   name: string;
   code: string;
-  lecturer: Omit<Lecturer, 'courses' | 'nidn' | 'homebase' | 'faculty'>;
+  lecturer: Omit<Lecturer, 'courses' | 'nidn' | 'homebase' | 'faculty' | 'status'>;
   schedule: string;
   room: string;
   studentCount: number;
@@ -24,7 +25,7 @@ export type Course = {
 export type AttendanceRecord = {
   id: string;
   course: Course;
-  lecturer: Omit<Lecturer, 'courses' | 'nidn' | 'homebase' | 'faculty'>;
+  lecturer: Omit<Lecturer, 'courses' | 'nidn' | 'homebase' | 'faculty' | 'status'>;
   scanTime: Date;
   status: "Present" | "Late";
 };
@@ -40,9 +41,9 @@ export type Student = {
 
 
 const baseLecturers = [
-  { id: 'lec-1', nidn: '0123456789', name: 'Dr. Aris', homebase: 'Teknik Informatika', faculty: 'Fakultas Ilmu Komputer', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-1')?.imageUrl || '' },
-  { id: 'lec-2', nidn: '0987654321', name: 'Prof. Budi', homebase: 'Sistem Informasi', faculty: 'Fakultas Ilmu Komputer', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-2')?.imageUrl || '' },
-  { id: 'lec-3', nidn: '1122334455', name: 'Dr. Citra', homebase: 'Teknik Komputer', faculty: 'Fakultas Teknik', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-3')?.imageUrl || '' },
+  { id: 'lec-1', nidn: '0123456789', name: 'Dr. Aris', homebase: 'Teknik Informatika', faculty: 'Fakultas Ilmu Komputer', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-1')?.imageUrl || '', status: 'Tetap' as const },
+  { id: 'lec-2', nidn: '0987654321', name: 'Prof. Budi', homebase: 'Sistem Informasi', faculty: 'Fakultas Ilmu Komputer', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-2')?.imageUrl || '', status: 'LB' as const },
+  { id: 'lec-3', nidn: '1122334455', name: 'Dr. Citra', homebase: 'Teknik Komputer', faculty: 'Fakultas Teknik', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-3')?.imageUrl || '', status: 'Non Daily' as const },
 ] as const;
 
 
