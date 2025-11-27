@@ -11,6 +11,8 @@ import {
   QrCode,
   Users,
   XCircle,
+  UserCheck,
+  UserX,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -45,6 +47,13 @@ export default function Dashboard() {
   const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
   
   const lecturerStats = calculateWeeklyLecturerStats(lecturers, attendanceRecords);
+
+  // Simulate student attendance for upcoming classes
+  const upcomingClassesWithAttendance = courses.slice(0, 4).map(course => {
+    const presentStudents = Math.floor(Math.random() * (course.studentCount - 5)) + 5; // Randomly generate present students
+    const absentStudents = course.studentCount - presentStudents;
+    return { ...course, presentStudents, absentStudents };
+  });
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -168,20 +177,30 @@ export default function Dashboard() {
               <CardDescription>These classes are scheduled for today.</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-6">
-              {courses.slice(0, 4).map((course, index) => (
-                <div className="flex items-center gap-4" key={course.id}>
-                  <Avatar className="h-10 w-10">
+              {upcomingClassesWithAttendance.map((course) => (
+                <div className="flex items-start gap-4" key={course.id}>
+                  <Avatar className="h-10 w-10 border">
                     <AvatarImage src={course.lecturer.avatarUrl} alt="Avatar" data-ai-hint="person" />
                     <AvatarFallback>{course.lecturer.name.charAt(0)}</AvatarFallback>
                   </Avatar>
-                  <div className="grid gap-1 text-sm">
+                  <div className="grid gap-1.5 text-sm flex-1">
                     <p className="font-medium leading-none">
                       {course.name}
                     </p>
                     <p className="text-muted-foreground flex items-center gap-1"><Book className="h-3 w-3" /> {course.lecturer.name}</p>
                      <p className="text-muted-foreground flex items-center gap-1"><Users className="h-3 w-3" /> {course.studentCount} Mahasiswa</p>
+                     <div className="flex items-center gap-4 pt-1">
+                        <div className="flex items-center gap-1.5 text-green-600">
+                            <UserCheck className="h-4 w-4" />
+                            <span className="font-semibold">{course.presentStudents}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-red-600">
+                            <UserX className="h-4 w-4" />
+                            <span className="font-semibold">{course.absentStudents}</span>
+                        </div>
+                     </div>
                   </div>
-                  <div className="ml-auto font-medium flex items-center gap-1 text-sm">
+                  <div className="ml-auto font-medium flex items-center gap-1 text-sm text-muted-foreground">
                     <Clock className="h-3 w-3" />
                     {course.schedule.split(', ')[1]}
                   </div>
