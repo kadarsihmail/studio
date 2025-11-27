@@ -47,7 +47,7 @@ export default function AppHeader() {
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <QrCode className="h-6 w-6 text-primary" />
-            <span className="sr-only">KaryaCheck</span>
+            <span>KaryaCheck</span>
           </Link>
         </nav>
         <Sheet>
@@ -66,7 +66,7 @@ export default function AppHeader() {
           </SheetContent>
         </Sheet>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-            <h1 className="font-semibold text-xl">{getTitle()}</h1>
+            <h1 className="font-semibold text-xl md:ml-4">{getTitle()}</h1>
             <div className="ml-auto flex-1 sm:flex-initial">
                 {/* Search can be added here in future */}
             </div>
