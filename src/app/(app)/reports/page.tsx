@@ -5,7 +5,7 @@ import { Calendar as CalendarIcon, FileDown, ListFilter } from 'lucide-react';
 import { addDays, format } from 'date-fns';
 import { DateRange } from 'react-day-picker';
 
-import { cn } from '@/lib/utils';
+import { cn, calculateWeeklyLecturerStats } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
@@ -37,7 +37,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { attendanceRecords, courses } from '@/lib/data';
+import { attendanceRecords, courses, lecturers } from '@/lib/data';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -61,6 +61,35 @@ export default function ReportsPage() {
     const courseMatches = courseFilter === 'all' || record.course.id === courseFilter;
     return isAfterFrom && isBeforeTo && courseMatches;
   });
+
+  const handleExport = () => {
+    const lecturerStats = calculateWeeklyLecturerStats(lecturers, attendanceRecords);
+
+    const title = "Laporan Rekap Dosen Mengajar";
+    const headers = ["No", "Nama Dosen", "Total Rekap"];
+    const csvRows = [
+        title,
+        headers.join(','),
+    ];
+
+    lecturerStats.forEach((stat, index) => {
+        const row = [
+            index + 1,
+            `"${stat.name}"`,
+            stat.finalRecap.toFixed(1)
+        ].join(',');
+        csvRows.push(row);
+    });
+
+    const csvContent = "data:text/csv;charset=utf-8," + csvRows.join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `laporan_rekap_dosen_${format(new Date(), 'yyyy-MM-dd')}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   return (
     <Card>
@@ -140,7 +169,7 @@ export default function ReportsPage() {
                 <DropdownMenuCheckboxItem>Late</DropdownMenuCheckboxItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button size="sm" variant="outline" className="h-10 gap-1">
+            <Button size="sm" variant="outline" className="h-10 gap-1" onClick={handleExport}>
               <FileDown className="h-3.5 w-3.5" />
               <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                 Export
