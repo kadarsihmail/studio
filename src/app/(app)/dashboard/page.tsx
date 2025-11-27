@@ -208,6 +208,7 @@ export default function Dashboard() {
                       {course.name}
                     </p>
                     <p className="text-muted-foreground flex items-center gap-1"><Book className="h-3 w-3" /> {course.lecturer.name}</p>
+                     <p className="text-muted-foreground flex items-center gap-1"><Users className="h-3 w-3" /> {course.studentCount} Mahasiswa</p>
                   </div>
                   <div className="ml-auto font-medium flex items-center gap-1 text-sm">
                     <Clock className="h-3 w-3" />

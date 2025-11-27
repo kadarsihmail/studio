@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { lecturers, courses } from "@/lib/data";
-import { Building, Edit, GraduationCap, Hash, Mail, User as UserIcon, BookOpen } from "lucide-react";
+import { Building, Edit, GraduationCap, Hash, Mail, User as UserIcon, BookOpen, Users } from "lucide-react";
 
 export default function ProfilePage() {
     // For demonstration, we'll use the first lecturer.
@@ -75,8 +75,12 @@ export default function ProfilePage() {
                                         <Badge variant="secondary">{course.schedule}</Badge>
                                     </div>
                                     <Separator className="my-3"/>
-                                     <div className="text-sm text-muted-foreground flex items-center">
+                                     <div className="text-sm text-muted-foreground flex items-center justify-between">
                                        <p>Ruangan: {course.room}</p>
+                                       <div className="flex items-center gap-1">
+                                            <Users className="h-4 w-4" />
+                                            <span>{course.studentCount} Mahasiswa</span>
+                                       </div>
                                     </div>
                                 </Card>
                            ))}
