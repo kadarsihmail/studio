@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Calendar as CalendarIcon, FileDown, ListFilter } from 'lucide-react';
 import { addDays, format } from 'date-fns';
 import { DateRange } from 'react-day-picker';
+import * as XLSX from 'xlsx';
 
 import { cn, calculateWeeklyLecturerStats } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -67,28 +68,28 @@ export default function ReportsPage() {
 
     const title = "Laporan Rekap Dosen Mengajar";
     const headers = ["No", "Nama Dosen", "Total Rekap"];
-    const csvRows = [
-        title,
-        headers.join(','),
+    
+    const dataToExport = lecturerStats.map((stat, index) => ({
+        No: index + 1,
+        "Nama Dosen": stat.name,
+        "Total Rekap": stat.finalRecap.toFixed(1)
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet([]);
+    XLSX.utils.sheet_add_aoa(worksheet, [[title]], { origin: "A1" });
+    XLSX.utils.sheet_add_json(worksheet, dataToExport, { origin: "A3", skipHeader: false, header: headers });
+    
+    // Set column widths
+    worksheet['!cols'] = [
+        { wch: 5 }, // No
+        { wch: 30 }, // Nama Dosen
+        { wch: 15 }, // Total Rekap
     ];
 
-    lecturerStats.forEach((stat, index) => {
-        const row = [
-            index + 1,
-            `"${stat.name}"`,
-            stat.finalRecap.toFixed(1)
-        ].join(',');
-        csvRows.push(row);
-    });
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan Rekap");
 
-    const csvContent = "data:text/csv;charset=utf-8," + csvRows.join('\n');
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `laporan_rekap_dosen_${format(new Date(), 'yyyy-MM-dd')}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    XLSX.writeFile(workbook, `laporan_rekap_dosen_${format(new Date(), 'yyyy-MM-dd')}.xlsx`);
   }
 
   return (
