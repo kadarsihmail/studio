@@ -7,6 +7,7 @@ import {
   CalendarCheck,
   CheckCircle,
   Clock,
+  FileText,
   QrCode,
   Users,
   XCircle,
@@ -18,6 +19,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -39,6 +41,7 @@ type LecturerWeeklyStats = {
   present: number;
   late: number;
   total: number;
+  finalRecap: number;
 };
 
 export default function Dashboard() {
@@ -56,15 +59,18 @@ export default function Dashboard() {
 
   const lecturerStats: LecturerWeeklyStats[] = lecturers.map(lecturer => {
     const lecturerRecords = weeklyAttendance.filter(rec => rec.lecturer.id === lecturer.id);
-    const present = lecturerRecords.filter(r => r.status === 'Present').length;
+    const present = lecturerRecords.filter(r => r.status === 'Present' || r.status === 'Late').length; // Count present and late as attendance for the calculation
     const late = lecturerRecords.filter(r => r.status === 'Late').length;
+    const finalRecap = (present * 2) - 16;
+
     return {
       id: lecturer.id,
       name: lecturer.name,
       avatarUrl: lecturer.avatarUrl,
-      present: present,
+      present: lecturerRecords.filter(r => r.status === 'Present').length,
       late: late,
       total: lecturerRecords.length,
+      finalRecap: finalRecap,
     };
   });
 
@@ -224,7 +230,7 @@ export default function Dashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {lecturerStats.map(lecturer => (
                             <Card key={lecturer.id} className="flex flex-col">
-                                <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-2">
+                                <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-4">
                                     <Avatar className="h-12 w-12">
                                         <AvatarImage src={lecturer.avatarUrl} alt={lecturer.name} data-ai-hint="person" />
                                         <AvatarFallback>{lecturer.name.charAt(0)}</AvatarFallback>
@@ -234,18 +240,31 @@ export default function Dashboard() {
                                         <CardDescription>{lecturer.total} sessions this week</CardDescription>
                                     </div>
                                 </CardHeader>
-                                <CardContent className="flex-grow flex items-center justify-around pt-4">
+                                <CardContent className="flex-grow grid grid-cols-2 gap-4 pt-2">
                                      <div className="flex items-center gap-2 text-green-600">
                                         <CheckCircle className="h-5 w-5" />
-                                        <span className="font-bold text-lg">{lecturer.present}</span>
-                                        <span className="text-sm text-muted-foreground">Present</span>
+                                        <div>
+                                            <div className="font-bold text-lg">{lecturer.present}</div>
+                                            <div className="text-sm text-muted-foreground">Present</div>
+                                        </div>
                                     </div>
                                     <div className="flex items-center gap-2 text-destructive">
                                         <XCircle className="h-5 w-5" />
-                                        <span className="font-bold text-lg">{lecturer.late}</span>
-                                        <span className="text-sm text-muted-foreground">Late</span>
+                                        <div>
+                                            <div className="font-bold text-lg">{lecturer.late}</div>
+                                            <div className="text-sm text-muted-foreground">Late</div>
+                                        </div>
                                     </div>
                                 </CardContent>
+                                <CardFooter className="bg-muted/50 p-3 mt-4">
+                                    <div className="flex items-center gap-2 text-sm w-full">
+                                        <FileText className="h-4 w-4 text-primary" />
+                                        <span className="font-medium text-muted-foreground">Rekap Akhir:</span>
+                                        <span className={`font-bold ml-auto ${lecturer.finalRecap >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                            {lecturer.finalRecap}
+                                        </span>
+                                    </div>
+                                </CardFooter>
                             </Card>
                         ))}
                     </div>
