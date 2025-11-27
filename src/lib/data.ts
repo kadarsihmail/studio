@@ -28,6 +28,16 @@ export type AttendanceRecord = {
   status: "Present" | "Late";
 };
 
+export type Student = {
+  id: string;
+  nim: string;
+  name: string;
+  programStudy: string;
+  angkatan: number;
+  avatarUrl: string;
+};
+
+
 const baseLecturers = [
   { id: 'lec-1', nidn: '0123456789', name: 'Dr. Aris', homebase: 'Teknik Informatika', faculty: 'Fakultas Ilmu Komputer', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-1')?.imageUrl || '' },
   { id: 'lec-2', nidn: '0987654321', name: 'Prof. Budi', homebase: 'Sistem Informasi', faculty: 'Fakultas Ilmu Komputer', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-2')?.imageUrl || '' },
@@ -55,4 +65,8 @@ export const attendanceRecords: AttendanceRecord[] = [
   { id: 'att-4', course: courses[3], lecturer: lecturers[0], scanTime: new Date('2024-05-23T09:00:00'), status: 'Present' },
   { id: 'att-5', course: courses[0], lecturer: lecturers[0], scanTime: new Date('2024-05-27T08:01:00'), status: 'Present' },
   { id: 'att-6', course: courses[1], lecturer: lecturers[1], scanTime: new Date('2024-05-28T10:05:00'), status: 'Present' },
+];
+
+export const students: Student[] = [
+    { id: 'stu-1', nim: '1234567890', name: 'Andi', programStudy: 'Teknik Informatika', angkatan: 2022, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjQxNDEzMzd8MA&ixlib=rb-4.1.0&q=80&w=1080' }
 ];

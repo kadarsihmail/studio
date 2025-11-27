@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   BarChart3,
+  GraduationCap,
   LayoutDashboard,
   QrCode,
   ScanLine,
@@ -23,7 +24,8 @@ const navItems = [
   { href: '/generate-qr', icon: QrCode, label: 'Generate QR' },
   { href: '/scan', icon: ScanLine, label: 'Scan' },
   { href: '/reports', icon: BarChart3, label: 'Reports' },
-  { href: '/profile', icon: User, label: 'Profile' },
+  { href: '/profile', icon: User, label: 'Lecturer Profile' },
+  { href: '/student-profile', icon: GraduationCap, label: 'Student Profile' },
 ];
 
 export default function AppSidebar() {
