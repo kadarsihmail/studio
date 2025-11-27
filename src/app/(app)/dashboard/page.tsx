@@ -1,7 +1,9 @@
+
 import Link from "next/link";
 import {
   Activity,
   ArrowUpRight,
+  Book,
   CalendarCheck,
   Clock,
   QrCode,
@@ -112,12 +114,8 @@ export default function Dashboard() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Lecturer</TableHead>
-                    <TableHead className="hidden xl:table-column">
-                      Course
-                    </TableHead>
-                    <TableHead className="hidden xl:table-column">
-                      Status
-                    </TableHead>
+                    <TableHead>Course</TableHead>
+                    <TableHead className="hidden sm:table-cell">Status</TableHead>
                     <TableHead className="text-right">Time</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -125,18 +123,21 @@ export default function Dashboard() {
                   {attendanceRecords.slice(0, 5).map((record) => (
                     <TableRow key={record.id}>
                       <TableCell>
-                        <div className="flex items-center gap-2">
-                            <Avatar className="hidden h-9 w-9 sm:flex">
+                        <div className="flex items-center gap-3">
+                            <Avatar className="h-9 w-9">
                               <AvatarImage src={record.lecturer.avatarUrl} alt="Avatar" data-ai-hint="man portrait"/>
                               <AvatarFallback>{record.lecturer.name.charAt(0)}</AvatarFallback>
                             </Avatar>
                             <div className="font-medium">{record.lecturer.name}</div>
                         </div>
                       </TableCell>
-                      <TableCell className="hidden xl:table-column">
-                        {record.course.name}
+                      <TableCell>
+                        <div className="font-medium">{record.course.name}</div>
+                        <div className="text-sm text-muted-foreground md:inline">
+                          {record.course.code}
+                        </div>
                       </TableCell>
-                      <TableCell className="hidden xl:table-column">
+                      <TableCell className="hidden sm:table-cell">
                         <Badge className="text-xs" variant={record.status === 'Present' ? 'default' : 'destructive'}>
                           {record.status}
                         </Badge>
@@ -155,18 +156,18 @@ export default function Dashboard() {
               <CardTitle>Upcoming Classes</CardTitle>
               <CardDescription>These classes are scheduled for today.</CardDescription>
             </CardHeader>
-            <CardContent className="grid gap-4">
+            <CardContent className="grid gap-6">
               {courses.slice(0, 4).map((course, index) => (
                 <div className="flex items-center gap-4" key={course.id}>
-                  <Avatar className="hidden h-9 w-9 sm:flex">
+                  <Avatar className="h-10 w-10">
                     <AvatarImage src={course.lecturer.avatarUrl} alt="Avatar" data-ai-hint="person" />
                     <AvatarFallback>{course.lecturer.name.charAt(0)}</AvatarFallback>
                   </Avatar>
-                  <div className="grid gap-1">
-                    <p className="text-sm font-medium leading-none">
+                  <div className="grid gap-1 text-sm">
+                    <p className="font-medium leading-none">
                       {course.name}
                     </p>
-                    <p className="text-sm text-muted-foreground">{course.lecturer.name}</p>
+                    <p className="text-muted-foreground flex items-center gap-1"><Book className="h-3 w-3" /> {course.lecturer.name}</p>
                   </div>
                   <div className="ml-auto font-medium flex items-center gap-1 text-sm">
                     <Clock className="h-3 w-3" />
