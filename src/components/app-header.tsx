@@ -33,7 +33,7 @@ export default function AppHeader() {
       case '/student-profile':
         return 'Student Profile';
       default:
-        return 'DosenCheck';
+        return 'KaryaCheck';
     }
   }
 
@@ -45,7 +45,7 @@ export default function AppHeader() {
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <QrCode className="h-6 w-6 text-primary" />
-            <span className="sr-only">DosenCheck</span>
+            <span className="sr-only">KaryaCheck</span>
           </Link>
         </nav>
         <Sheet>

@@ -73,7 +73,7 @@ export default function GenerateQrPage() {
                 <div className="flex flex-col items-center justify-center p-6 gap-6">
                   <div className="p-2 bg-white rounded-lg shadow-md">
                     <Image
-                      src={`${qrCodePlaceholder.imageUrl}&data=${encodeURIComponent(`DosenCheck|${selectedCourse.id}|${new Date().toISOString()}`)}`}
+                      src={`${qrCodePlaceholder.imageUrl}&data=${encodeURIComponent(`KaryaCheck|${selectedCourse.id}|${new Date().toISOString()}`)}`}
                       alt="QR Code for session"
                       width={250}
                       height={250}

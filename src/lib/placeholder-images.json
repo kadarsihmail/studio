@@ -21,7 +21,7 @@
     {
       "id": "qr-code-placeholder",
       "description": "A placeholder QR code",
-      "imageUrl": "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=DosenCheckSession",
+      "imageUrl": "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=KaryaCheckSession",
       "imageHint": "qr code"
     }
   ]

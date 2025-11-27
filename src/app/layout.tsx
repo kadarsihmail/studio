@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'DosenCheck',
+  title: 'KaryaCheck',
   description: 'Aplikasi untuk monitoring kehadiran dosen dengan qrcode',
 };
 
