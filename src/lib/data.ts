@@ -20,6 +20,8 @@ export type Course = {
   schedule: string;
   room: string;
   studentCount: number;
+  sks: 2 | 3 | 4;
+  classType: 'Reguler' | 'Karyawan' | 'Jumat-Sabtu';
 };
 
 export type AttendanceRecord = {
@@ -48,11 +50,11 @@ const baseLecturers = [
 
 
 export const courses: Course[] = [
-  { id: 'course-1', name: 'Pemrograman Web Lanjutan', code: 'CS101', lecturer: baseLecturers[0], schedule: 'Senin, 08:00 - 10:00', room: 'Lab 1', studentCount: 42 },
-  { id: 'course-2', name: 'Struktur Data & Algoritma', code: 'CS102', lecturer: baseLecturers[1], schedule: 'Selasa, 10:00 - 12:00', room: 'Ruang 201', studentCount: 38 },
-  { id: 'course-3', name: 'Kecerdasan Buatan', code: 'AI201', lecturer: baseLecturers[2], schedule: 'Rabu, 13:00 - 15:00', room: 'Ruang 305', studentCount: 35 },
-  { id: 'course-4', name: 'Basis Data', code: 'DB301', lecturer: baseLecturers[0], schedule: 'Kamis, 09:00 - 11:00', room: 'Lab 2', studentCount: 45 },
-  { id: 'course-5', name: 'Jaringan Komputer', code: 'CN401', lecturer: baseLecturers[1], schedule: 'Jumat, 10:00 - 12:00', room: 'Lab 3', studentCount: 32 },
+  { id: 'course-1', name: 'Pemrograman Web Lanjutan', code: 'CS101', lecturer: baseLecturers[0], schedule: 'Senin, 08:00 - 10:00', room: 'Lab 1', studentCount: 42, sks: 3, classType: 'Reguler' },
+  { id: 'course-2', name: 'Struktur Data & Algoritma', code: 'CS102', lecturer: baseLecturers[1], schedule: 'Selasa, 10:00 - 12:00', room: 'Ruang 201', studentCount: 38, sks: 4, classType: 'Karyawan' },
+  { id: 'course-3', name: 'Kecerdasan Buatan', code: 'AI201', lecturer: baseLecturers[2], schedule: 'Rabu, 13:00 - 15:00', room: 'Ruang 305', studentCount: 35, sks: 3, classType: 'Reguler' },
+  { id: 'course-4', name: 'Basis Data', code: 'DB301', lecturer: baseLecturers[0], schedule: 'Kamis, 09:00 - 11:00', room: 'Lab 2', studentCount: 45, sks: 2, classType: 'Reguler' },
+  { id: 'course-5', name: 'Jaringan Komputer', code: 'CN401', lecturer: baseLecturers[1], schedule: 'Sabtu, 10:00 - 12:00', room: 'Lab 3', studentCount: 32, sks: 2, classType: 'Jumat-Sabtu' },
 ];
 
 export const lecturers: Lecturer[] = baseLecturers.map(lecturer => ({
@@ -66,7 +68,7 @@ export const attendanceRecords: AttendanceRecord[] = [
   { id: 'att-3', course: courses[2], lecturer: lecturers[2], scanTime: new Date('2024-05-22T13:02:00'), status: 'Present' },
   { id: 'att-4', course: courses[3], lecturer: lecturers[0], scanTime: new Date('2024-05-23T09:00:00'), status: 'Present' },
   { id: 'att-5', course: courses[0], lecturer: lecturers[0], scanTime: new Date('2024-05-27T08:01:00'), status: 'Present' },
-  { id: 'att-6', course: courses[1], lecturer: lecturers[1], scanTime: new Date('2024-05-28T10:05:00'), status: 'Present' },
+  { id: 'att-6', course: courses[4], lecturer: lecturers[1], scanTime: new Date('2024-05-25T10:05:00'), status: 'Present' },
 ];
 
 export const students: Student[] = [

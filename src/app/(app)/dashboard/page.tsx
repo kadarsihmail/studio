@@ -31,8 +31,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { attendanceRecords, courses, lecturers, type Lecturer } from "@/lib/data";
+import { attendanceRecords, courses, lecturers, type Course } from "@/lib/data";
 import { format, startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
+
+const getSKSCredit = (course: Course): number => {
+    if (course.classType === 'Jumat-Sabtu') {
+      return course.sks;
+    }
+    // Reguler and Karyawan
+    switch (course.sks) {
+      case 2: return 1;
+      case 3: return 1.5;
+      case 4: return 2;
+      default: return 0;
+    }
+};
 
 type LecturerWeeklyStats = {
   id: string;
@@ -42,7 +55,7 @@ type LecturerWeeklyStats = {
   late: number;
   total: number;
   finalRecap: number;
-  status: Lecturer['status'];
+  status: 'Tetap' | 'Non Daily' | 'LB';
 };
 
 export default function Dashboard() {
@@ -63,11 +76,18 @@ export default function Dashboard() {
     const presentCount = lecturerRecords.filter(r => r.status === 'Present' || r.status === 'Late').length;
     const lateCount = lecturerRecords.filter(r => r.status === 'Late').length;
     
+    const totalCredits = lecturerRecords.reduce((sum, record) => {
+        if(record.status === 'Present' || record.status === 'Late') {
+            return sum + getSKSCredit(record.course);
+        }
+        return sum;
+    }, 0);
+
     let finalRecap: number;
     if (lecturer.status === 'Tetap' || lecturer.status === 'Non Daily') {
-      finalRecap = (presentCount * 2) - 16;
+      finalRecap = totalCredits - 16;
     } else { // Dosen LB
-      finalRecap = presentCount;
+      finalRecap = totalCredits;
     }
 
     return {
@@ -271,9 +291,9 @@ export default function Dashboard() {
                                 <CardFooter className="bg-muted/50 p-3 mt-4">
                                     <div className="flex items-center gap-2 text-sm w-full">
                                         <FileText className="h-4 w-4 text-primary" />
-                                        <span className="font-medium text-muted-foreground">Rekap Akhir:</span>
+                                        <span className="font-medium text-muted-foreground">Rekap Akhir (SKS):</span>
                                         <span className={`font-bold ml-auto ${lecturer.finalRecap >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                            {lecturer.finalRecap}
+                                            {lecturer.finalRecap.toFixed(1)}
                                         </span>
                                     </div>
                                 </CardFooter>
