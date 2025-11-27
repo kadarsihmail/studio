@@ -5,9 +5,11 @@ import {
   ArrowUpRight,
   Book,
   CalendarCheck,
+  CheckCircle,
   Clock,
   QrCode,
   Users,
+  XCircle,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -27,13 +29,45 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { attendanceRecords, courses } from "@/lib/data";
-import { format } from "date-fns";
+import { attendanceRecords, courses, lecturers } from "@/lib/data";
+import { format, startOfWeek, endOfWeek, isWithinInterval } from "date-fns";
+
+type LecturerWeeklyStats = {
+  id: string;
+  name: string;
+  avatarUrl: string;
+  present: number;
+  late: number;
+  total: number;
+};
 
 export default function Dashboard() {
   const totalScans = attendanceRecords.length;
   const onTimeScans = attendanceRecords.filter(r => r.status === 'Present').length;
   const attendanceRate = totalScans > 0 ? (onTimeScans / totalScans) * 100 : 0;
+
+  const today = new Date();
+  const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
+  const endOfWeekDate = endOfWeek(today, { weekStartsOn: 1 });
+
+  const weeklyAttendance = attendanceRecords.filter(record => 
+    isWithinInterval(record.scanTime, { start: startOfWeekDate, end: endOfWeekDate })
+  );
+
+  const lecturerStats: LecturerWeeklyStats[] = lecturers.map(lecturer => {
+    const lecturerRecords = weeklyAttendance.filter(rec => rec.lecturer.id === lecturer.id);
+    const present = lecturerRecords.filter(r => r.status === 'Present').length;
+    const late = lecturerRecords.filter(r => r.status === 'Late').length;
+    return {
+      id: lecturer.id,
+      name: lecturer.name,
+      avatarUrl: lecturer.avatarUrl,
+      present: present,
+      late: late,
+      total: lecturerRecords.length,
+    };
+  });
+
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -177,6 +211,46 @@ export default function Dashboard() {
               ))}
             </CardContent>
           </Card>
+        </div>
+        <div className="grid gap-4 md:gap-8">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Weekly Attendance Recap</CardTitle>
+                    <CardDescription>
+                        Attendance summary for each lecturer this week. ({format(startOfWeekDate, 'd MMM')} - {format(endOfWeekDate, 'd MMM')})
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {lecturerStats.map(lecturer => (
+                            <Card key={lecturer.id} className="flex flex-col">
+                                <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-2">
+                                    <Avatar className="h-12 w-12">
+                                        <AvatarImage src={lecturer.avatarUrl} alt={lecturer.name} data-ai-hint="person" />
+                                        <AvatarFallback>{lecturer.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <div>
+                                        <CardTitle className="text-lg">{lecturer.name}</CardTitle>
+                                        <CardDescription>{lecturer.total} sessions this week</CardDescription>
+                                    </div>
+                                </CardHeader>
+                                <CardContent className="flex-grow flex items-center justify-around pt-4">
+                                     <div className="flex items-center gap-2 text-green-600">
+                                        <CheckCircle className="h-5 w-5" />
+                                        <span className="font-bold text-lg">{lecturer.present}</span>
+                                        <span className="text-sm text-muted-foreground">Present</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-destructive">
+                                        <XCircle className="h-5 w-5" />
+                                        <span className="font-bold text-lg">{lecturer.late}</span>
+                                        <span className="text-sm text-muted-foreground">Late</span>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                </CardContent>
+            </Card>
         </div>
       </main>
     </div>
