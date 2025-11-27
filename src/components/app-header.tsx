@@ -28,6 +28,8 @@ export default function AppHeader() {
         return 'Scan Attendance';
       case '/reports':
         return 'Attendance Reports';
+      case '/profile':
+        return 'Lecturer Profile';
       default:
         return 'DosenCheck';
     }
@@ -74,6 +76,7 @@ export default function AppHeader() {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <Link href="/profile"><DropdownMenuItem>Profile</DropdownMenuItem></Link>
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />

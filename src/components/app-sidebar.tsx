@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   QrCode,
   ScanLine,
+  User,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -16,13 +17,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { Button } from './ui/button';
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/generate-qr', icon: QrCode, label: 'Generate QR' },
   { href: '/scan', icon: ScanLine, label: 'Scan' },
   { href: '/reports', icon: BarChart3, label: 'Reports' },
+  { href: '/profile', icon: User, label: 'Profile' },
 ];
 
 export default function AppSidebar() {

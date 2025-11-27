@@ -3,7 +3,10 @@ import { PlaceHolderImages } from './placeholder-images';
 
 export type Lecturer = {
   id: string;
+  nidn: string;
   name: string;
+  homebase: string;
+  faculty: string;
   avatarUrl: string;
   courses: Course[];
 };
@@ -12,7 +15,7 @@ export type Course = {
   id: string;
   name: string;
   code: string;
-  lecturer: Omit<Lecturer, 'courses'>;
+  lecturer: Omit<Lecturer, 'courses' | 'nidn' | 'homebase' | 'faculty'>;
   schedule: string;
   room: string;
 };
@@ -20,16 +23,17 @@ export type Course = {
 export type AttendanceRecord = {
   id: string;
   course: Course;
-  lecturer: Omit<Lecturer, 'courses'>;
+  lecturer: Omit<Lecturer, 'courses' | 'nidn' | 'homebase' | 'faculty'>;
   scanTime: Date;
   status: "Present" | "Late";
 };
 
 const baseLecturers = [
-  { id: 'lec-1', name: 'Dr. Aris', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-1')?.imageUrl || '' },
-  { id: 'lec-2', name: 'Prof. Budi', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-2')?.imageUrl || '' },
-  { id: 'lec-3', name: 'Dr. Citra', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-3')?.imageUrl || '' },
+  { id: 'lec-1', nidn: '0123456789', name: 'Dr. Aris', homebase: 'Teknik Informatika', faculty: 'Fakultas Ilmu Komputer', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-1')?.imageUrl || '' },
+  { id: 'lec-2', nidn: '0987654321', name: 'Prof. Budi', homebase: 'Sistem Informasi', faculty: 'Fakultas Ilmu Komputer', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-2')?.imageUrl || '' },
+  { id: 'lec-3', nidn: '1122334455', name: 'Dr. Citra', homebase: 'Teknik Komputer', faculty: 'Fakultas Teknik', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-3')?.imageUrl || '' },
 ] as const;
+
 
 export const courses: Course[] = [
   { id: 'course-1', name: 'Pemrograman Web Lanjutan', code: 'CS101', lecturer: baseLecturers[0], schedule: 'Senin, 08:00 - 10:00', room: 'Lab 1' },
