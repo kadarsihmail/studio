@@ -9,6 +9,7 @@ import {
   QrCode,
   ScanLine,
   User,
+  ShieldCheck,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -23,6 +24,7 @@ const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/generate-qr', icon: QrCode, label: 'Generate QR' },
   { href: '/scan', icon: ScanLine, label: 'Scan' },
+  { href: '/supervision', icon: ShieldCheck, label: 'Pengawasan Ujian' },
   { href: '/reports', icon: BarChart3, label: 'Reports' },
   { href: '/profile', icon: User, label: 'Lecturer Profile' },
   { href: '/student-profile', icon: GraduationCap, label: 'Student Profile' },
@@ -49,8 +51,9 @@ export default function AppSidebar() {
                   href={item.href}
                   className={cn(
                     'flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8',
-                    pathname === item.href &&
-                      'bg-accent text-accent-foreground'
+                    pathname.startsWith(item.href) && item.href !== '/' &&
+                      'bg-accent text-accent-foreground',
+                    pathname === '/' && item.href === '/dashboard' && 'bg-accent text-accent-foreground'
                   )}
                 >
                   <item.icon className="h-5 w-5" />

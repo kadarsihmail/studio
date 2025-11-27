@@ -26,6 +26,8 @@ export default function AppHeader() {
         return 'Generate QR Code';
       case '/scan':
         return 'Scan Attendance';
+      case '/supervision':
+        return 'Pengawasan Ujian';
       case '/reports':
         return 'Attendance Reports';
       case '/profile':

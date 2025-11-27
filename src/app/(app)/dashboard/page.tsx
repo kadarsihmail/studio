@@ -13,6 +13,7 @@ import {
   XCircle,
   UserCheck,
   UserX,
+  ShieldCheck
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -33,7 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { attendanceRecords, courses, lecturers } from "@/lib/data";
+import { attendanceRecords, courses, lecturers, supervisionRecords } from "@/lib/data";
 import { format, startOfWeek, endOfWeek } from "date-fns";
 import { calculateWeeklyLecturerStats } from "@/lib/utils";
 
@@ -41,6 +42,8 @@ export default function Dashboard() {
   const totalScans = attendanceRecords.length;
   const onTimeScans = attendanceRecords.filter(r => r.status === 'Present').length;
   const attendanceRate = totalScans > 0 ? (onTimeScans / totalScans) * 100 : 0;
+  const totalSupervisions = supervisionRecords.length;
+
 
   const today = new Date();
   const startOfWeekDate = startOfWeek(today, { weekStartsOn: 1 });
@@ -89,14 +92,14 @@ export default function Dashboard() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Recent Scans</CardTitle>
-              <Activity className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium">Total Mengawas</CardTitle>
+                <ShieldCheck className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+{totalScans}</div>
-              <p className="text-xs text-muted-foreground">
-                in the last week
-              </p>
+                <div className="text-2xl font-bold">{totalSupervisions}</div>
+                <p className="text-xs text-muted-foreground">
+                    Dalam semester ini
+                </p>
             </CardContent>
           </Card>
           <Card className="bg-primary text-primary-foreground">

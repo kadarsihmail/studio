@@ -41,6 +41,23 @@ export type Student = {
   avatarUrl: string;
 };
 
+export type Exam = {
+    id: string;
+    courseName: string;
+    courseCode: string;
+    examType: 'UTS' | 'UAS';
+    schedule: string;
+    room: string;
+};
+
+export type SupervisionRecord = {
+    id: string;
+    exam: Exam;
+    supervisor: Omit<Lecturer, 'courses' | 'nidn' | 'homebase' | 'faculty' | 'status'>;
+    scanTime: Date;
+    status: 'Hadir';
+};
+
 
 const baseLecturers = [
   { id: 'lec-1', nidn: '0123456789', name: 'Dr. Aris', homebase: 'Teknik Informatika', faculty: 'Fakultas Ilmu Komputer', avatarUrl: PlaceHolderImages.find(img => img.id === 'lecturer-1')?.imageUrl || '', status: 'Tetap' as const },
@@ -74,3 +91,15 @@ export const attendanceRecords: AttendanceRecord[] = [
 export const students: Student[] = [
     { id: 'stu-1', nim: '1234567890', name: 'Andi', programStudy: 'Teknik Informatika', angkatan: 2022, avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjQxNDEzMzd8MA&ixlib=rb-4.1.0&q=80&w=1080' }
 ];
+
+export const exams: Exam[] = [
+    { id: 'exam-1', courseName: 'Pemrograman Web Lanjutan', courseCode: 'CS101', examType: 'UTS', schedule: 'Jumat, 08:00 - 10:00', room: 'Aula' },
+    { id: 'exam-2', courseName: 'Struktur Data & Algoritma', courseCode: 'CS102', examType: 'UTS', schedule: 'Jumat, 10:30 - 12:30', room: 'Aula' },
+    { id: 'exam-3', courseName: 'Kecerdasan Buatan', courseCode: 'AI201', examType: 'UAS', schedule: 'Sabtu, 08:00 - 10:00', room: 'Ruang 401' },
+];
+
+export const supervisionRecords: SupervisionRecord[] = [
+    { id: 'sup-1', exam: exams[0], supervisor: lecturers[2], scanTime: new Date('2024-06-07T08:00:00'), status: 'Hadir' },
+    { id: 'sup-2', exam: exams[1], supervisor: lecturers[0], scanTime: new Date('2024-06-07T10:28:00'), status: 'Hadir' },
+];
+
