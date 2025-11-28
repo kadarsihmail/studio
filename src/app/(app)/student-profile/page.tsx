@@ -24,7 +24,7 @@ export default function StudentProfilePage() {
                             <AvatarFallback>{student.name.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <CardTitle className="text-2xl">{student.name}</CardTitle>
-                        <CardDescription>Mahasiswa</CardDescription>
+                        <CardDescription>Student</CardDescription>
                          <Button size="sm" variant="outline" className="mt-4">
                             <Edit className="mr-2 h-4 w-4" /> Edit Profile
                         </Button>
@@ -34,15 +34,15 @@ export default function StudentProfilePage() {
                         <div className="space-y-4 text-sm text-muted-foreground">
                             <div className="flex items-center gap-3">
                                 <Hash className="h-5 w-5 text-primary" />
-                                <span>NIM: {student.nim}</span>
+                                <span>ID: {student.studentId}</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <School className="h-5 w-5 text-primary" />
-                                <span>{student.programStudy}</span>
+                                <span>{student.major}</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Calendar className="h-5 w-5 text-primary" />
-                                <span>Angkatan: {student.angkatan}</span>
+                                <span>Batch: {student.batchYear}</span>
                             </div>
                         </div>
                     </CardContent>
@@ -51,3 +51,5 @@ export default function StudentProfilePage() {
         </div>
     );
 }
+
+    

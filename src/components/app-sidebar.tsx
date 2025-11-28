@@ -25,9 +25,9 @@ const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/generate-qr', icon: QrCode, label: 'Generate QR' },
   { href: '/scan', icon: ScanLine, label: 'Scan' },
-  { href: '/supervision', icon: ShieldCheck, label: 'Pengawasan Ujian' },
+  { href: '/supervision', icon: ShieldCheck, label: 'Supervision' },
   { href: '/reports', icon: BarChart3, label: 'Reports' },
-  { href: '/surat', icon: FileText, label: 'Administrasi Surat' },
+  { href: '/surat', icon: FileText, label: 'Letters' },
   { href: '/profile', icon: User, label: 'Lecturer Profile' },
   { href: '/student-profile', icon: GraduationCap, label: 'Student Profile' },
 ];
@@ -73,3 +73,5 @@ export default function AppSidebar() {
     </aside>
   );
 }
+
+    

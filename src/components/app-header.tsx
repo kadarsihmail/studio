@@ -23,15 +23,15 @@ export default function AppHeader() {
       case '/dashboard':
         return 'Dashboard';
       case '/generate-qr':
-        return 'Generate QR Code';
+        return 'Generate QR';
       case '/scan':
         return 'Scan Attendance';
       case '/supervision':
-        return 'Pengawasan Ujian';
+        return 'Exam Supervision';
       case '/reports':
         return 'Attendance Reports';
       case '/surat':
-        return 'Administrasi Surat';
+        return 'Letter Administration';
       case '/profile':
         return 'Lecturer Profile';
       case '/student-profile':
@@ -94,3 +94,5 @@ export default function AppHeader() {
       </header>
   )
 }
+
+    

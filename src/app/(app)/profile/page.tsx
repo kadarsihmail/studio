@@ -29,7 +29,7 @@ export default function ProfilePage() {
                                 <AvatarFallback>{lecturer.name.charAt(0)}</AvatarFallback>
                             </Avatar>
                             <CardTitle className="text-2xl">{lecturer.name}</CardTitle>
-                            <CardDescription>Dosen</CardDescription>
+                            <CardDescription>Lecturer</CardDescription>
                              <Button size="sm" variant="outline" className="mt-4">
                                 <Edit className="mr-2 h-4 w-4" /> Edit Profile
                             </Button>
@@ -39,7 +39,7 @@ export default function ProfilePage() {
                             <div className="space-y-4 text-sm text-muted-foreground">
                                 <div className="flex items-center gap-3">
                                     <Hash className="h-5 w-5 text-primary" />
-                                    <span>NIDN: {lecturer.nidn}</span>
+                                    <span>ID: {lecturer.lecturerId}</span>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <Building className="h-5 w-5 text-primary" />
@@ -47,7 +47,7 @@ export default function ProfilePage() {
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <GraduationCap className="h-5 w-5 text-primary" />
-                                    <span>Homebase: {lecturer.homebase}</span>
+                                    <span>Department: {lecturer.department}</span>
                                 </div>
                                  <div className="flex items-center gap-3">
                                     <Mail className="h-5 w-5 text-primary" />
@@ -61,8 +61,8 @@ export default function ProfilePage() {
                 <div className="md:col-span-2">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Mata Kuliah yang Diampu</CardTitle>
-                            <CardDescription>Daftar mata kuliah yang diajar oleh {lecturer.name}.</CardDescription>
+                            <CardTitle>Courses Taught</CardTitle>
+                            <CardDescription>List of courses taught by {lecturer.name}.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
                            {lecturerCourses.map((course) => (
@@ -76,10 +76,10 @@ export default function ProfilePage() {
                                     </div>
                                     <Separator className="my-3"/>
                                      <div className="text-sm text-muted-foreground flex items-center justify-between">
-                                       <p>Ruangan: {course.room}</p>
+                                       <p>Room: {course.room}</p>
                                        <div className="flex items-center gap-1">
                                             <Users className="h-4 w-4" />
-                                            <span>{course.studentCount} Mahasiswa</span>
+                                            <span>{course.studentCount} Students</span>
                                        </div>
                                     </div>
                                 </Card>
@@ -87,7 +87,7 @@ export default function ProfilePage() {
                            {lecturerCourses.length === 0 && (
                                <div className="text-center text-muted-foreground py-8">
                                    <BookOpen className="mx-auto h-12 w-12" />
-                                   <p className="mt-2">Belum ada mata kuliah yang diampu.</p>
+                                   <p className="mt-2">No courses taught yet.</p>
                                 </div>
                            )}
                         </CardContent>
@@ -97,3 +97,5 @@ export default function ProfilePage() {
         </div>
     );
 }
+
+    

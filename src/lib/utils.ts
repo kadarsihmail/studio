@@ -8,11 +8,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getSKSCredit = (course: Course): number => {
-    if (course.classType === 'Jumat-Sabtu') {
-      return course.sks;
+    if (course.classType === 'Weekend') {
+      return course.credits;
     }
-    // Reguler and Karyawan
-    switch (course.sks) {
+    // Regular and Executive
+    switch (course.credits) {
       case 2: return 1;
       case 3: return 1.5;
       case 4: return 2;
@@ -28,7 +28,7 @@ export type LecturerWeeklyStats = {
   late: number;
   total: number;
   finalRecap: number;
-  status: 'Tetap' | 'Non Daily' | 'LB';
+  status: 'Full-time' | 'Part-time' | 'Contract';
 };
 
 export const calculateWeeklyLecturerStats = (lecturers: Lecturer[], attendanceRecords: AttendanceRecord[]): LecturerWeeklyStats[] => {
@@ -53,9 +53,10 @@ export const calculateWeeklyLecturerStats = (lecturers: Lecturer[], attendanceRe
         }, 0);
 
         let finalRecap: number;
-        if (lecturer.status === 'Tetap' || lecturer.status === 'Non Daily') {
-          finalRecap = totalCredits - 16;
-        } else { // Dosen LB
+        if (lecturer.status === 'Full-time' || lecturer.status === 'Part-time') {
+          // Calculation for Full-time and Part-time lecturers
+          finalRecap = (totalCredits * 2) - 16;
+        } else { // Contract lecturers
           finalRecap = totalCredits;
         }
 
@@ -73,3 +74,5 @@ export const calculateWeeklyLecturerStats = (lecturers: Lecturer[], attendanceRe
 
     return lecturerStats;
 }
+
+    

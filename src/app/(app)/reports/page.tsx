@@ -66,13 +66,13 @@ export default function ReportsPage() {
   const handleExport = () => {
     const lecturerStats = calculateWeeklyLecturerStats(lecturers, attendanceRecords);
 
-    const title = "Laporan Rekap Dosen Mengajar";
-    const headers = ["No", "Nama Dosen", "Total Rekap"];
+    const title = "Lecturer Recap Report";
+    const headers = ["No", "Lecturer Name", "Total Recap"];
     
     const dataToExport = lecturerStats.map((stat, index) => ({
         No: index + 1,
-        "Nama Dosen": stat.name,
-        "Total Rekap": stat.finalRecap.toFixed(1)
+        "Lecturer Name": stat.name,
+        "Total Recap": stat.finalRecap.toFixed(1)
     }));
 
     const worksheet = XLSX.utils.json_to_sheet([]);
@@ -82,14 +82,14 @@ export default function ReportsPage() {
     // Set column widths
     worksheet['!cols'] = [
         { wch: 5 }, // No
-        { wch: 30 }, // Nama Dosen
-        { wch: 15 }, // Total Rekap
+        { wch: 30 }, // Lecturer Name
+        { wch: 15 }, // Total Recap
     ];
 
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan Rekap");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Recap Report");
 
-    XLSX.writeFile(workbook, `laporan_rekap_dosen_${format(new Date(), 'yyyy-MM-dd')}.xlsx`);
+    XLSX.writeFile(workbook, `lecturer_recap_report_${format(new Date(), 'yyyy-MM-dd')}.xlsx`);
   }
 
   return (
@@ -240,3 +240,5 @@ export default function ReportsPage() {
     </Card>
   );
 }
+
+    

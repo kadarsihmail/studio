@@ -92,13 +92,13 @@ export default function Dashboard() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Mengawas</CardTitle>
+                <CardTitle className="text-sm font-medium">Total Supervisions</CardTitle>
                 <ShieldCheck className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold">{totalSupervisions}</div>
                 <p className="text-xs text-muted-foreground">
-                    Dalam semester ini
+                    This semester
                 </p>
             </CardContent>
           </Card>
@@ -191,7 +191,7 @@ export default function Dashboard() {
                       {course.name}
                     </p>
                     <p className="text-muted-foreground flex items-center gap-1"><Book className="h-3 w-3" /> {course.lecturer.name}</p>
-                     <p className="text-muted-foreground flex items-center gap-1"><Users className="h-3 w-3" /> {course.studentCount} Mahasiswa</p>
+                     <p className="text-muted-foreground flex items-center gap-1"><Users className="h-3 w-3" /> {course.studentCount} Students</p>
                      <div className="flex items-center gap-4 pt-1">
                         <div className="flex items-center gap-1.5 text-green-600">
                             <UserCheck className="h-4 w-4" />
@@ -251,12 +251,13 @@ export default function Dashboard() {
                                             <div className="font-bold text-lg">{lecturer.late}</div>
                                             <div className="text-sm text-muted-foreground">Late</div>
                                         </div>
+
                                     </div>
                                 </CardContent>
                                 <CardFooter className="bg-muted/50 p-3 mt-4">
                                     <div className="flex items-center gap-2 text-sm w-full">
                                         <FileText className="h-4 w-4 text-primary" />
-                                        <span className="font-medium text-muted-foreground">Rekap Akhir (SKS):</span>
+                                        <span className="font-medium text-muted-foreground">Final Recap (Credits):</span>
                                         <span className={`font-bold ml-auto ${lecturer.finalRecap >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                                             {lecturer.finalRecap.toFixed(1)}
                                         </span>
@@ -272,3 +273,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+    

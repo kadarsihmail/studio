@@ -16,13 +16,13 @@ export default function SupervisionPage() {
             ...exam,
             supervisor: record ? record.supervisor : null,
             scanTime: record ? record.scanTime : null,
-            status: record ? record.status : 'Belum Hadir',
+            status: record ? record.status : 'Not Present',
         };
     });
 
     // Calculate supervisor recap data
     const supervisorRecap = supervisionRecords.reduce((acc, record) => {
-        if (record.status === 'Hadir') {
+        if (record.status === 'Present') {
             const existing = acc.find(item => item.id === record.supervisor.id);
             if (existing) {
                 existing.count += 1;
@@ -43,19 +43,19 @@ export default function SupervisionPage() {
             <div className="grid gap-8">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Jadwal Pengawasan Ujian</CardTitle>
+                        <CardTitle>Exam Supervision Schedule</CardTitle>
                         <CardDescription>
-                            Daftar jadwal pengawasan ujian tengah semester dan ujian akhir semester.
+                            Schedule for midterm and final exam supervisions.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Mata Kuliah</TableHead>
-                                    <TableHead>Jadwal & Ruang</TableHead>
-                                    <TableHead>Jenis Ujian</TableHead>
-                                    <TableHead>Pengawas</TableHead>
+                                    <TableHead>Course</TableHead>
+                                    <TableHead>Schedule & Room</TableHead>
+                                    <TableHead>Exam Type</TableHead>
+                                    <TableHead>Supervisor</TableHead>
                                     <TableHead className="text-right">Status</TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -72,7 +72,7 @@ export default function SupervisionPage() {
                                             </div>
                                         </TableCell>
                                         <TableCell>
-                                            <Badge variant={item.examType === 'UTS' ? 'secondary' : 'default'}>{item.examType}</Badge>
+                                            <Badge variant={item.examType === 'Midterm' ? 'secondary' : 'default'}>{item.examType}</Badge>
                                         </TableCell>
                                         <TableCell>
                                             {item.supervisor ? (
@@ -84,14 +84,14 @@ export default function SupervisionPage() {
                                                     <div className="font-medium">{item.supervisor.name}</div>
                                                 </div>
                                             ) : (
-                                                <span className="text-muted-foreground">Belum ada</span>
+                                                <span className="text-muted-foreground">Unassigned</span>
                                             )}
                                         </TableCell>
                                         <TableCell className="text-right">
-                                            {item.status === 'Hadir' ? (
+                                            {item.status === 'Present' ? (
                                                 <div className="flex items-center justify-end gap-2 text-green-600">
                                                     <CheckCircle className="h-4 w-4" />
-                                                    <span>Hadir ({format(item.scanTime!, 'HH:mm')})</span>
+                                                    <span>Present ({format(item.scanTime!, 'HH:mm')})</span>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center justify-end gap-2 text-destructive">
@@ -109,9 +109,9 @@ export default function SupervisionPage() {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Rekap Kehadiran Pengawas</CardTitle>
+                        <CardTitle>Supervisor Attendance Recap</CardTitle>
                         <CardDescription>
-                            Total kehadiran setiap pengawas dalam mengawas ujian.
+                            Total attendance for each supervisor during exams.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -119,8 +119,8 @@ export default function SupervisionPage() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead className="w-[80px]">No.</TableHead>
-                                    <TableHead>Nama Pengawas</TableHead>
-                                    <TableHead className="text-right">Jumlah Hadir</TableHead>
+                                    <TableHead>Supervisor Name</TableHead>
+                                    <TableHead className="text-right">Total Present</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -146,7 +146,7 @@ export default function SupervisionPage() {
                                 )) : (
                                     <TableRow>
                                         <TableCell colSpan={3} className="h-24 text-center">
-                                            Belum ada data kehadiran pengawas.
+                                            No supervisor attendance data yet.
                                         </TableCell>
                                     </TableRow>
                                 )}
@@ -158,3 +158,5 @@ export default function SupervisionPage() {
         </div>
     )
 }
+
+    

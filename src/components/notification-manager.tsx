@@ -6,13 +6,13 @@ import { courses } from '@/lib/data';
 import { BellRing, BellOff } from 'lucide-react';
 
 const DAY_MAP: { [key: string]: number } = {
-  'minggu': 0,
-  'senin': 1,
-  'selasa': 2,
-  'rabu': 3,
-  'kamis': 4,
-  'jumat': 5,
-  'sabtu': 6,
+  'sunday': 0,
+  'monday': 1,
+  'tuesday': 2,
+  'wednesday': 3,
+  'thursday': 4,
+  'friday': 5,
+  'saturday': 6,
 };
 
 export default function NotificationManager() {
@@ -29,8 +29,8 @@ export default function NotificationManager() {
 
       courses.forEach((course) => {
         try {
-          const [dayStr, timeRange] = course.schedule.split(', ');
-          const dayIndex = DAY_MAP[dayStr.toLowerCase()];
+          const [dayStr, timeRange] = course.schedule.toLowerCase().split(', ');
+          const dayIndex = DAY_MAP[dayStr];
           const [startTime, endTime] = timeRange.split(' - ');
           
           const startKey = `${course.id}-${startTime}`;
@@ -42,10 +42,10 @@ export default function NotificationManager() {
               toast({
                 title: (
                   <div className="flex items-center gap-2">
-                    <BellRing className="h-5 w-5 text-primary" /> Waktunya Mengajar!
+                    <BellRing className="h-5 w-5 text-primary" /> Class Starting!
                   </div>
                 ),
-                description: `Kelas ${course.name} dimulai sekarang di ${course.room}.`,
+                description: `Class ${course.name} is starting now in ${course.room}.`,
               });
               notifiedStartTimes.add(startKey);
             }
@@ -55,10 +55,10 @@ export default function NotificationManager() {
               toast({
                  title: (
                   <div className="flex items-center gap-2">
-                    <BellOff className="h-5 w-5" /> Waktu Habis
+                    <BellOff className="h-5 w-5" /> Class Ended
                   </div>
                 ),
-                description: `Kelas ${course.name} telah selesai.`,
+                description: `Class ${course.name} has finished.`,
               });
               notifiedEndTimes.add(endKey);
             }
@@ -79,3 +79,5 @@ export default function NotificationManager() {
 
   return null;
 }
+
+    
