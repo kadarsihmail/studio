@@ -30,6 +30,8 @@ export default function AppHeader() {
         return 'Pengawasan Ujian';
       case '/reports':
         return 'Attendance Reports';
+      case '/surat':
+        return 'Administrasi Surat';
       case '/profile':
         return 'Lecturer Profile';
       case '/student-profile':

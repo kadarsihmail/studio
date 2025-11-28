@@ -10,6 +10,7 @@ import {
   ScanLine,
   User,
   ShieldCheck,
+  FileText,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -26,6 +27,7 @@ const navItems = [
   { href: '/scan', icon: ScanLine, label: 'Scan' },
   { href: '/supervision', icon: ShieldCheck, label: 'Pengawasan Ujian' },
   { href: '/reports', icon: BarChart3, label: 'Reports' },
+  { href: '/surat', icon: FileText, label: 'Administrasi Surat' },
   { href: '/profile', icon: User, label: 'Lecturer Profile' },
   { href: '/student-profile', icon: GraduationCap, label: 'Student Profile' },
 ];
