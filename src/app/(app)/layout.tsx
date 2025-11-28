@@ -1,5 +1,6 @@
 import AppHeader from "@/components/app-header";
 import AppSidebar from "@/components/app-sidebar";
+import NotificationManager from "@/components/notification-manager";
 
 export default function AppLayout({
   children,
@@ -15,6 +16,7 @@ export default function AppLayout({
             {children}
         </main>
       </div>
+      <NotificationManager />
     </div>
   );
 }
