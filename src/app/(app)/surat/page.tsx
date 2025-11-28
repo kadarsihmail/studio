@@ -59,6 +59,12 @@ export default function SuratPage() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       letterType: '',
+      studentId: '',
+      diplomaNumber: '',
+      graduationDate: '',
+      incorrectDocument: '',
+      errorDescription: '',
+      correctInformation: '',
     },
   });
 
